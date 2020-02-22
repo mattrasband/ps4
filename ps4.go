@@ -32,7 +32,7 @@ func Discover() ([]*Input, error) {
 
 	candidates, err := ev.ListInputDevices("/dev/input/event*")
 	if err != nil {
-		return []Input{}, err
+		return []*Input{}, err
 	}
 
 	inputs := []*Input{}
@@ -134,7 +134,7 @@ type AbsEvent struct {
 	Value  int32
 }
 
-func Watch(ctx context.Context, input Input) (<-chan interface{}, error) {
+func Watch(ctx context.Context, input *Input) (<-chan interface{}, error) {
 	events := make(chan interface{}, 10)
 
 	go func() {

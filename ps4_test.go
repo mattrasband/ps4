@@ -13,7 +13,7 @@ func TestRun(t *testing.T) {
 		return
 	}
 
-	var dev Input
+	var dev *Input
 	for _, c := range candidates {
 		if c.Type == Controller {
 			dev = c
@@ -34,8 +34,10 @@ func TestRun(t *testing.T) {
 	fmt.Printf("Watching...\n")
 
 	for e := range events {
-		if (av.Button >= LeftStickX && av.Button <= RightStickClick) && (av.Value >= 120 && av.Value <= 134) {
-			continue
+		if av, ok := e.(*AbsEvent); ok {
+			if (av.Button >= LeftStickX && av.Button <= RightStickClick) && (av.Value >= 120 && av.Value <= 134) {
+				continue
+			}
 		}
 
 		fmt.Printf("%+v\n", e)
